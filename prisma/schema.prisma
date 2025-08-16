@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:1234@localhost:5432/turnero_muni"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  name        String
+  email       String  @unique
+  password    String
+  role        Role    @default(role.USUARIO)
+  adress      String
+  phone       String
+  turns       Turn[]
+}
+
+model Turn {
+  id            Int             @id @default(autoincrement())
+  date          date
+  user          User            @relation(fields: [userId], references: [id])
+  userId        Int
+  status        Status          @default(Creado)
+}
+enum Role {
+  ADMIN
+  DIRECTOR
+  RECEPCION
+  USUARIO
+}
+
+enum Status{
+  Creado
+  Eliminado
+}
