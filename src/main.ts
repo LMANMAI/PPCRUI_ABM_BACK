@@ -4,7 +4,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'error', 'warn', 'debug'],
+  });
 
   app.setGlobalPrefix('api/v1');
   app.enableCors();
@@ -17,8 +19,13 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document); // http://localhost:3000/docs
+  // deepScanRoutes ayuda cuando los controllers están en módulos anidados
+  const doc = SwaggerModule.createDocument(app, config, {
+    deepScanRoutes: true,
+  });
+  SwaggerModule.setup('docs', app, doc, {
+    swaggerOptions: { displayOperationId: true },
+  });
 
   await app.listen(process.env.PORT || 3000);
 }
