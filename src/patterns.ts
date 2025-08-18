@@ -5,4 +5,11 @@ export const PATTERN = {
   Centers_CreateCenter: 'Centers.CreateCenter',
   Centers_UpdateCenter: 'Centers.UpdateCenter',
   Centers_DeleteCenter: 'Centers.DeleteCenter',
+  Auth_Register: 'Auth.Register',
+  Auth_Login: 'Auth.Login',
+  Auth_Refresh: 'Auth.Refresh',
+  Appointments_Create: 'Appointments.Create',
+  Appointments_List: 'Appointments.List',
+  Appointments_GetById: 'Appointments.GetById',
+  Appointments_Cancel: 'Appointments.Cancel',
 } as const;
