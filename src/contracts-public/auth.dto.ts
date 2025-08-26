@@ -58,23 +58,9 @@ export class RegisterRequestDto {
 }
 
 export class LoginRequestDto {
-  @ApiProperty({ example: 'org-1' })
+  @ApiProperty({ example: 'maria.rios@example.com o 34876543' })
   @IsString()
-  orgId!: string;
-
-  @ApiPropertyOptional({
-    description: 'Email o DNI',
-    examples: ['user@demo.com', '34876543'],
-  })
-  @ValidateIf((o) => !o.email)
-  @IsString()
-  identifier?: string;
-
-  @ApiPropertyOptional({ example: 'user@demo.com' })
-  @ValidateIf((o) => !o.identifier)
-  @IsOptional()
-  @IsEmail()
-  email?: string;
+  identifier!: string;
 
   @ApiProperty()
   @IsString()
