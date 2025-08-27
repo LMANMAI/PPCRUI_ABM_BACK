@@ -8,12 +8,13 @@ import {
   IsEnum,
 } from 'class-validator';
 
-export enum ProfileType {
+export enum ProfileTypeDto {
   PATIENT = 'PATIENT',
   CENTER_ADMIN = 'CENTER_ADMIN',
   ORG_ADMIN = 'ORG_ADMIN',
+  OPERADOR_SALUD = 'OPERADOR_SALUD',
+  PERSONAL_SALUD = 'PERSONAL_SALUD',
 }
-
 export class RegisterRequestDto {
   @ApiProperty({ example: 'user@demo.com' })
   @IsEmail()
@@ -28,9 +29,9 @@ export class RegisterRequestDto {
   @IsString()
   orgId!: string;
 
-  @ApiProperty({ enum: ProfileType })
-  @IsEnum(ProfileType)
-  profileType!: ProfileType;
+  @ApiProperty({ enum: ProfileTypeDto })
+  @IsEnum(ProfileTypeDto)
+  profileType!: ProfileTypeDto;
 
   @ApiPropertyOptional()
   @IsOptional()
