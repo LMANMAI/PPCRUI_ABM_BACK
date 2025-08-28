@@ -17,6 +17,26 @@ export enum SlotStatusDto {
   BOOKED = 'BOOKED',
 }
 
+export enum SlotSpecialtyDto {
+  CLINICA_MEDICA = 'CLINICA_MEDICA',
+  CARDIOLOGIA = 'CARDIOLOGIA',
+  PEDIATRIA = 'PEDIATRIA',
+  GINECOLOGIA = 'GINECOLOGIA',
+  OBSTETRICIA = 'OBSTETRICIA',
+  TRAUMATOLOGIA = 'TRAUMATOLOGIA',
+  DERMATOLOGIA = 'DERMATOLOGIA',
+  NEUROLOGIA = 'NEUROLOGIA',
+  PSICOLOGIA = 'PSICOLOGIA',
+  PSIQUIATRIA = 'PSIQUIATRIA',
+  ODONTOLOGIA = 'ODONTOLOGIA',
+  KINESIOLOGIA = 'KINESIOLOGIA',
+  NUTRICION = 'NUTRICION',
+  FONOAUDIOLOGIA = 'FONOAUDIOLOGIA',
+  OFTALMOLOGIA = 'OFTALMOLOGIA',
+  OTORRINOLARINGOLOGIA = 'OTORRINOLARINGOLOGIA',
+  UROLOGIA = 'UROLOGIA',
+}
+
 export class CreateSlotDto {
   @ApiProperty() @Type(() => Number) @IsInt() centerId!: number;
   @ApiProperty() @IsString() staffUserId!: string;
@@ -61,6 +81,11 @@ export class CreateSlotDto {
   @IsInt()
   @Min(1)
   days?: number;
+
+  @ApiPropertyOptional({ enum: SlotSpecialtyDto })
+  @IsOptional()
+  @IsEnum(SlotSpecialtyDto)
+  specialty?: SlotSpecialtyDto;
 }
 
 export class ListSlotsDto {
@@ -72,4 +97,8 @@ export class ListSlotsDto {
   status?: SlotStatusDto;
   @ApiPropertyOptional() @IsOptional() @IsISO8601() dateFrom?: string;
   @ApiPropertyOptional() @IsOptional() @IsISO8601() dateTo?: string;
+  @ApiPropertyOptional({ enum: SlotSpecialtyDto })
+  @IsOptional()
+  @IsEnum(SlotSpecialtyDto)
+  specialty?: SlotSpecialtyDto;
 }
