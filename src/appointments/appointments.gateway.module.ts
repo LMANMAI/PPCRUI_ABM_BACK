@@ -5,6 +5,7 @@ import {
   ClientProviderOptions,
 } from '@nestjs/microservices';
 import { AppointmentsHttpController } from './appointments.http.controller';
+import { SlotsGetawayController } from 'src/slots/slots.gateway.controller';
 
 const useTcp = (process.env.MS_TRANSPORT ?? 'TCP') === 'TCP';
 
@@ -33,6 +34,6 @@ const APPOINTMENTS_CLIENT_RMQ: ClientProviderOptions = {
       useTcp ? APPOINTMENTS_CLIENT_TCP : APPOINTMENTS_CLIENT_RMQ,
     ]),
   ],
-  controllers: [AppointmentsHttpController],
+  controllers: [AppointmentsHttpController, SlotsGetawayController],
 })
 export class AppointmentsGatewayModule {}

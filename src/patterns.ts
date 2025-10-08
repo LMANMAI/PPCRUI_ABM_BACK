@@ -12,4 +12,9 @@ export const PATTERN = {
   Appointments_List: 'Appointments.List',
   Appointments_GetById: 'Appointments.GetById',
   Appointments_Cancel: 'Appointments.Cancel',
+  Appointments_Confirm: 'Appointments.Confirm',
+
+  Appointments_Slots_Create: 'Appointments.Slots.Create',
+  Appointments_Slots_List: 'Appointments.Slots.List',
+  Appointments_Slots_GetById: 'Appointments.Slots.GetById',
 } as const;

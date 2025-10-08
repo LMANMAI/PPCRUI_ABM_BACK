@@ -15,6 +15,7 @@ import {
   CreateAppointmentDto,
   ListAppointmentsDto,
   CancelAppointmentDto,
+  ConfirmAppointmentDto,
 } from '../contracts-public/appointments.dto';
 
 @ApiTags('Turnos')
@@ -27,7 +28,7 @@ export class AppointmentsHttpController {
   @Post()
   @ApiOperation({ summary: 'Crear turno' })
   @ApiBody({ type: CreateAppointmentDto })
-  async create(@Body() dto: CreateAppointmentDto) {
+  create(@Body() dto: CreateAppointmentDto) {
     return lastValueFrom(
       this.client.send(PATTERN.Appointments_Create, dto).pipe(timeout(8000)),
     );
@@ -35,12 +36,7 @@ export class AppointmentsHttpController {
 
   @Get()
   @ApiOperation({ summary: 'Listar turnos' })
-  @ApiQuery({ name: 'orgId', required: true })
-  @ApiQuery({ name: 'centerId', required: false })
-  @ApiQuery({ name: 'patientUserId', required: false })
-  @ApiQuery({ name: 'dateFrom', required: false })
-  @ApiQuery({ name: 'dateTo', required: false })
-  async list(@Query() q: ListAppointmentsDto) {
+  list(@Query() q: ListAppointmentsDto) {
     return lastValueFrom(
       this.client.send(PATTERN.Appointments_List, q).pipe(timeout(8000)),
     );
@@ -48,7 +44,7 @@ export class AppointmentsHttpController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Obtener turno por ID' })
-  async getById(@Param('id') id: string, @Query('orgId') orgId: string) {
+  getById(@Param('id') id: string, @Query('orgId') orgId: string) {
     return lastValueFrom(
       this.client
         .send(PATTERN.Appointments_GetById, { id, orgId })
@@ -59,7 +55,7 @@ export class AppointmentsHttpController {
   @Post(':id/cancel')
   @ApiOperation({ summary: 'Cancelar turno' })
   @ApiBody({ type: CancelAppointmentDto })
-  async cancel(
+  cancel(
     @Param('id') id: string,
     @Body() body: { orgId: string; reason?: string },
   ) {
@@ -70,6 +66,16 @@ export class AppointmentsHttpController {
     };
     return lastValueFrom(
       this.client.send(PATTERN.Appointments_Cancel, dto).pipe(timeout(8000)),
+    );
+  }
+
+  @Post(':id/confirm')
+  @ApiOperation({ summary: 'Confirmar turno' })
+  @ApiBody({ type: ConfirmAppointmentDto })
+  confirm(@Param('id') id: string, @Body() body: { orgId: string }) {
+    const dto: ConfirmAppointmentDto = { id, orgId: body.orgId };
+    return lastValueFrom(
+      this.client.send(PATTERN.Appointments_Confirm, dto).pipe(timeout(8000)),
     );
   }
 }
